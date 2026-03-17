@@ -25,13 +25,17 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
+- [ ] Describe the game's purpose. 
+- This project is a number guessing game built with Streamlit where the player tries to guess a secret number between 1 and 100 within a limited number of attempts.
 - [ ] Detail which bugs you found.
+- At the beginning, the game had several bugs. The secret number changed on every interaction because the state was not stored correctly, making it impossible to win. In addition, the hint system was broken and sometimes gave incorrect or impossible feedback, such as telling the player to guess lower even when the minimum value was entered.
 - [ ] Explain what fixes you applied.
+- To fix these issues, I stored the secret number in Streamlit session state so it would persist across reruns. I also corrected the comparison logic so guesses are evaluated numerically rather than as strings. Finally, I refactored the core game logic into `logic_utils.py` and verified the fix by running pytest and manually testing the game.
 
 ## 📸 Demo
 
 - [ ] [Insert a screenshot of your fixed, winning game here]
+![Winning Game Screenshot](demo.png)
 
 ## 🚀 Stretch Features
 
