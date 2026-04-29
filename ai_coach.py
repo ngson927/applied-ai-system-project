@@ -1,6 +1,6 @@
 import os
 from typing import Optional
-import anthropic
+import google.generativeai as genai
 from logging_config import get_logger
 
 _log = get_logger("ai_coach")
@@ -31,7 +31,13 @@ def get_coach_advice(
         attempts (int)     - attempts used so far
         attempt_limit (int)- total attempts allowed
     """
-    client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
+    genai.configure(api_key=api_key or os.getenv("GEMINI_API_KEY"))
+
+    model = genai.GenerativeModel(
+        model_name="gemini-2.0-flash",
+        system_instruction=COACH_SYSTEM,
+        generation_config=genai.GenerationConfig(max_output_tokens=256),
+    )
 
     context_text = "\n\n".join(retrieved_context) if retrieved_context else "No tips available."
     remaining = game_state.get("attempt_limit", 10) - game_state.get("attempts", 0)
@@ -58,20 +64,13 @@ def get_coach_advice(
     )
 
     try:
-        response = client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=256,
-            system=COACH_SYSTEM,
-            messages=[{"role": "user", "content": user_message}],
-        )
-        advice = response.content[0].text
+        response = model.generate_content(user_message)
+        advice = response.text
         _log.info(
-            "coach_response | input_tokens=%d output_tokens=%d advice_len=%d",
-            response.usage.input_tokens,
-            response.usage.output_tokens,
+            "coach_response | advice_len=%d",
             len(advice),
         )
         return advice
-    except anthropic.APIError as exc:
+    except Exception as exc:
         _log.error("coach_api_error | %s", exc)
         raise

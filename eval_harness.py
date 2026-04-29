@@ -182,7 +182,7 @@ def run_evaluation() -> dict:
 
 
 if __name__ == "__main__":
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        print("ERROR: ANTHROPIC_API_KEY environment variable is not set.")
+    if not os.getenv("GEMINI_API_KEY"):
+        print("ERROR: GEMINI_API_KEY environment variable is not set.")
         sys.exit(1)
     run_evaluation()

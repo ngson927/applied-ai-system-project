@@ -15,15 +15,15 @@ st.caption("An AI-generated guessing game. Something is off.")
 
 st.sidebar.header("Settings")
 
-_api_key_set = bool(os.getenv("ANTHROPIC_API_KEY"))
+_api_key_set = bool(os.getenv("GEMINI_API_KEY"))
 ai_coach_on = st.sidebar.checkbox(
     "Enable AI Coach 🤖",
     value=_api_key_set,
     disabled=not _api_key_set,
-    help="Requires ANTHROPIC_API_KEY environment variable.",
+    help="Requires GEMINI_API_KEY environment variable.",
 )
 if not _api_key_set:
-    st.sidebar.caption("⚠️ Set ANTHROPIC_API_KEY to enable the AI coach.")
+    st.sidebar.caption("⚠️ Set GEMINI_API_KEY to enable the AI coach.")
 
 difficulty = st.sidebar.selectbox(
     "Difficulty",
@@ -174,7 +174,7 @@ with st.expander("🤖 AI Solver Demo", expanded=False):
         "This runs live API calls and may take a few seconds."
     )
     if not _api_key_set:
-        st.warning("Set ANTHROPIC_API_KEY to use the AI Solver.")
+        st.warning("Set GEMINI_API_KEY to use the AI Solver.")
     else:
         if st.button("Solve Current Game ▶"):
             from agent_solver import solve_game

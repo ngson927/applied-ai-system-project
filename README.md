@@ -503,3 +503,9 @@ I used Claude (via Claude Code CLI) as a primary collaborator throughout this pr
     ├── test_game_logic.py  # Unit tests for logic_utils (3 tests)
     └── test_rag_utils.py   # Unit tests for rag_utils (5 tests)
 ```
+## 🎥 Demo Screenshot
+
+Below is a screenshot of the system running end-to-end:
+
+![Final Demo](final.png)
+> Note: Due to a temporary issue with Loom, screenshots are provided to demonstrate the system functionality.
